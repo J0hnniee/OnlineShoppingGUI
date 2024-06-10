@@ -41,7 +41,7 @@ public class Register extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Register");
+        setTitle("REGISTER PAGE");
         setBackground(new java.awt.Color(204, 204, 204));
         setPreferredSize(new java.awt.Dimension(800, 500));
 
@@ -194,6 +194,8 @@ public class Register extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 466, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 34, Short.MAX_VALUE))
         );
+
+        getAccessibleContext().setAccessibleName("REGISTER PAGE");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
