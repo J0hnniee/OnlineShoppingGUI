@@ -4,7 +4,7 @@
  */
 package onlineshoppinggui;
 
-import java.sql.Connection; 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,18 +17,19 @@ import java.util.logging.Logger;
  * @author johnn
  */
 public class UserDatabase {
+
     Connection connection = DatabaseConnection.getConnection();
     PreparedStatement ps;
     Statement statement;
     ResultSet rs;
-    
+
     // get user table row
-    public int getMaxRow(){
+    public int getMaxRow() {
         int row = 0;
         try {
             statement = connection.createStatement();
             rs = statement.executeQuery("select max(userid) from users");
-            while(rs.next()){
+            while (rs.next()) {
                 row = rs.getInt(1);
             }
         } catch (SQLException ex) {
@@ -36,4 +37,20 @@ public class UserDatabase {
         }
         return row + 1;
     }
+
+    // check if email already exists
+    public boolean isEmailExists(String email) {
+        try {
+            ps = connection.prepareStatement("select * from users where useremail = ?");
+            ps.setString(1, email);
+            rs = ps.executeQuery();
+            if(rs.next()){
+                return true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
 }
