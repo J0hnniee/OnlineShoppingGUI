@@ -54,18 +54,22 @@ public class CategoryManager extends javax.swing.JFrame {
         categoryField.setText("");
         descriptionField.setText("");
         categoryTable.clearSelection();
-        
+
     }
-    
-    private boolean updateCategory(){
+
+    private boolean updateCategory() {
         String newCategory = categoryField.getText();
         String oldCategory = model.getValueAt(rowIndex, 1).toString();
-        
-        if(newCategory.equals(oldCategory)){
+
+        if (newCategory.equals(oldCategory)) {
             return false;
         } else {
-            if(!newCategory.equals(oldCategory)){
-                
+            if (!newCategory.equals(oldCategory)) {
+                boolean cat = category.isCategoryNameExist(newCategory);
+                if (cat) {
+                    JOptionPane.showMessageDialog(this, "This category already exists");
+                }
+                return cat;
             }
         }
         return false;
@@ -165,6 +169,11 @@ public class CategoryManager extends javax.swing.JFrame {
         });
 
         jButton5.setText("Delete");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("Search:");
@@ -310,7 +319,21 @@ public class CategoryManager extends javax.swing.JFrame {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
+        if (isEmpty()) {
+            int id = Integer.parseInt(categoryID.getText());
+            if (category.CategoryIDExist(id)) {
+                if (!updateCategory()) {
+                    String categoryName = categoryField.getText();
+                    String description = descriptionField.getText();
+                    category.updateCategories(id, categoryName, description);
+                    categoryTable.setModel(new DefaultTableModel(null, new Object[]{"Category ID", "Category Name", "Description"}));
+                    category.getCategoryValues(categoryTable, "");
+                    clear();
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Category ID doesn't exist", "Warning", 2);
+            }
+        }
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void categoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryTableMouseClicked
@@ -321,6 +344,22 @@ public class CategoryManager extends javax.swing.JFrame {
         descriptionField.setText(model.getValueAt(rowIndex, 2).toString());
 
     }//GEN-LAST:event_categoryTableMouseClicked
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        if (categoryID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please select a category");
+        } else {
+            int id = Integer.parseInt(categoryID.getText());
+            if (category.CategoryIDExist(id)) {
+                category.deleteCategory(id);
+                categoryTable.setModel(new DefaultTableModel(null, new Object[]{"Category ID", "Category Name", "Description"}));
+                category.getCategoryValues(categoryTable, "");
+                clear();
+            } else {
+                JOptionPane.showMessageDialog(this, "Category doesn't exist", "Warning", 2);
+            }
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
