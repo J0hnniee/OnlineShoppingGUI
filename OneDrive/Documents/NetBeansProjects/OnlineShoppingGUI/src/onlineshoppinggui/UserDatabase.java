@@ -104,26 +104,4 @@ public class UserDatabase {
         return id;
     }
 
-    public String[] getUserValue(int id) {
-        String[] value = new String[9];
-        try {
-            ps = connection.prepareStatement("select * from users where userid = ?");
-            ps.setInt(1, id);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                value[0] = rs.getString(1);
-                value[1] = rs.getString(2);
-                value[2] = rs.getString(3);
-                value[3] = rs.getString(4);
-                value[4] = rs.getString(5);
-                value[5] = rs.getString(6);
-                value[6] = rs.getString(7);
-                value[7] = rs.getString(8);
-                value[8] = rs.getString(9);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return value;
-    }
 }

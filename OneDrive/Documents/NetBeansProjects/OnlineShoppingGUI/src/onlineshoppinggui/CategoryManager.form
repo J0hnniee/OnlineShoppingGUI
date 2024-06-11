@@ -52,7 +52,7 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="saveButton" min="-2" pref="106" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jButton1" min="-2" pref="106" max="-2" attributes="0"/>
+                          <Component id="updateButton" min="-2" pref="106" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jButton5" min="-2" pref="106" max="-2" attributes="0"/>
@@ -109,7 +109,7 @@
                           <Component id="descriptionField" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton1" alignment="3" min="-2" pref="57" max="-2" attributes="0"/>
+                              <Component id="updateButton" alignment="3" min="-2" pref="57" max="-2" attributes="0"/>
                               <Component id="saveButton" alignment="3" min="-2" pref="57" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -164,6 +164,9 @@
                   <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="categoryTableMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -232,10 +235,13 @@
             <Property name="text" type="java.lang.String" value="Description"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="updateButton">
           <Properties>
             <Property name="text" type="java.lang.String" value="Update"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="updateButtonActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton3">
           <Properties>

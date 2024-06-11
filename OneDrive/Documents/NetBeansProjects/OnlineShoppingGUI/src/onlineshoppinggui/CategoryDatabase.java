@@ -12,6 +12,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -51,12 +53,12 @@ public class CategoryDatabase {
         }
         return false;
     }
-    
-        public void insertCategory(int id, String categoryName, String description) {
+
+    public void insertCategory(int categoryid, String categoryName, String description) {
         String sql = "insert into category values(?,?,?)";
         try {
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setInt(1, categoryid);
             ps.setString(2, categoryName);
             ps.setString(3, description);
             if (ps.executeUpdate() > 0) {
@@ -65,6 +67,26 @@ public class CategoryDatabase {
 
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDatabase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public void getCategoryValues(JTable table, String search) {
+        String categorySQL = "select * from category where categoryname like ? order by categoryid asc";
+        try {
+            ps = connection.prepareStatement(categorySQL);
+            ps.setString(1, "%"+search+"%");
+            rs = ps.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            Object [] row;
+            while(rs.next()){
+                row = new Object[3];
+                row[0] = rs.getInt(1);
+                row[1] = rs.getString(2);
+                row[2] = rs.getString(3);
+                model.addRow(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

@@ -16,18 +16,20 @@ public class CategoryManager extends javax.swing.JFrame {
 
     CategoryDatabase category = new CategoryDatabase();
     DefaultTableModel model;
+    int rowIndex;
+
     public CategoryManager() {
         initComponents();
         init();
     }
-    
-    private void categoryTable(){
+
+    private void categoryTable() {
+        category.getCategoryValues(categoryTable, "");
         model = (DefaultTableModel) categoryTable.getModel();
         categoryTable.setShowGrid(true);
         categoryTable.setBackground(Color.WHITE);
         categoryTable.setGridColor(Color.BLACK);
     }
-    
 
     private boolean isEmpty() {
         if (categoryField.getText().isEmpty()) {
@@ -40,10 +42,33 @@ public class CategoryManager extends javax.swing.JFrame {
         }
         return true;
     }
-    
 
     private void init() {
         categoryID.setText(String.valueOf(category.getMaxRow()));
+        categoryTable();
+    }
+
+    private void clear() {
+        searchBar.setText("");
+        categoryID.setText(String.valueOf(category.getMaxRow()));
+        categoryField.setText("");
+        descriptionField.setText("");
+        categoryTable.clearSelection();
+        
+    }
+    
+    private boolean updateCategory(){
+        String newCategory = categoryField.getText();
+        String oldCategory = model.getValueAt(rowIndex, 1).toString();
+        
+        if(newCategory.equals(oldCategory)){
+            return false;
+        } else {
+            if(!newCategory.equals(oldCategory)){
+                
+            }
+        }
+        return false;
     }
 
     /**
@@ -65,7 +90,7 @@ public class CategoryManager extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        updateButton = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -94,6 +119,11 @@ public class CategoryManager extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        categoryTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                categoryTableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(categoryTable);
 
         searchBar.setBackground(new java.awt.Color(255, 255, 255));
@@ -118,7 +148,12 @@ public class CategoryManager extends javax.swing.JFrame {
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Description");
 
-        jButton1.setText("Update");
+        updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Clear");
 
@@ -179,7 +214,7 @@ public class CategoryManager extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -228,7 +263,7 @@ public class CategoryManager extends javax.swing.JFrame {
                         .addComponent(descriptionField, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(saveButton, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -259,18 +294,33 @@ public class CategoryManager extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
-        if(isEmpty()){
+        if (isEmpty()) {
             int id = Integer.parseInt(categoryID.getText());
             String categoryName = categoryField.getText();
             String description = descriptionField.getText();
-            if(!category.isCategoryNameExist(categoryName)){
+            if (!category.isCategoryNameExist(categoryName)) {
                 category.insertCategory(id, categoryName, description);
                 categoryTable.setModel(new DefaultTableModel(null, new Object[]{"Category ID", "Category Name", "Description"}));
-            }else{
+                category.getCategoryValues(categoryTable, "");
+                clear();
+            } else {
                 JOptionPane.showMessageDialog(this, "Category name already exists", "Warning", 2);
             }
         }
     }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void categoryTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_categoryTableMouseClicked
+        model = (DefaultTableModel) categoryTable.getModel();
+        rowIndex = categoryTable.getSelectedRow();
+        categoryID.setText(model.getValueAt(rowIndex, 0).toString());
+        categoryField.setText(model.getValueAt(rowIndex, 1).toString());
+        descriptionField.setText(model.getValueAt(rowIndex, 2).toString());
+
+    }//GEN-LAST:event_categoryTableMouseClicked
 
     /**
      * @param args the command line arguments
@@ -312,7 +362,6 @@ public class CategoryManager extends javax.swing.JFrame {
     private javax.swing.JTextField categoryID;
     private javax.swing.JTable categoryTable;
     private javax.swing.JTextField descriptionField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
@@ -326,6 +375,6 @@ public class CategoryManager extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton saveButton;
     private javax.swing.JTextField searchBar;
+    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }
-
