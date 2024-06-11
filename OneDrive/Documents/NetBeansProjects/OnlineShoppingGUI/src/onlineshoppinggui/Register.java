@@ -247,7 +247,7 @@ public class Register extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButton2);
-        jButton2.setBounds(520, 510, 127, 18);
+        jButton2.setBounds(520, 510, 127, 30);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
