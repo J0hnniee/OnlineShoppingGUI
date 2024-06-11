@@ -12,9 +12,8 @@ import javax.swing.JOptionPane;
  */
 public class AdminDashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AdminDashboard
-     */
+    int xx, xy;
+    
     public AdminDashboard() {
         initComponents();
     }
