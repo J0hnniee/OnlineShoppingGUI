@@ -68,20 +68,20 @@ public class CategoryDatabase {
         return false;
     }
 
-    public void insertCategory(int categoryid, String categoryName, String description) {
+    public void insertCategory(int id, String cname, String desc) {
         String sql = "insert into category values(?,?,?)";
         try {
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, categoryid);
-            ps.setString(2, categoryName);
-            ps.setString(3, description);
+            ps.setInt(1, id);
+            ps.setString(2, cname);
+            ps.setString(3, desc);
             if (ps.executeUpdate() > 0) {
                 JOptionPane.showMessageDialog(null, "Category added successfully");
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(CategoryDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     public void getCategoryValues(JTable table, String search) {
@@ -119,17 +119,17 @@ public class CategoryDatabase {
             Logger.getLogger(CategoryDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    public void deleteCategory(int id){
-        int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this?","Delete Category", JOptionPane.YES_NO_OPTION);
-        if(i == JOptionPane.OK_OPTION){
-            try{
+
+    public void deleteCategory(int id) {
+        int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this?", "Delete Category", JOptionPane.YES_NO_OPTION);
+        if (i == JOptionPane.OK_OPTION) {
+            try {
                 ps = connection.prepareStatement("delete from category where categoryid = ?");
                 ps.setInt(1, i);
-                if(ps.executeUpdate() > 0){
+                if (ps.executeUpdate() > 0) {
                     JOptionPane.showMessageDialog(null, "Category deleted");
                 }
-            } catch(SQLException ex){
+            } catch (SQLException ex) {
                 Logger.getLogger(CategoryDatabase.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
