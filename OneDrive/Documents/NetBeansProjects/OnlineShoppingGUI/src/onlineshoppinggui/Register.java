@@ -343,7 +343,7 @@ public class Register extends javax.swing.JFrame {
             
             if (!user.isEmailExists(email)) {
                 if (!user.isUsernameExist(username)) {
-                    user.insert(id,firstName, lastName, username, password, email, address);
+                    user.insertUser(id,firstName, lastName, username, password, email, address);
                     new Login().setVisible(true);
                     this.dispose();
                 } else {
