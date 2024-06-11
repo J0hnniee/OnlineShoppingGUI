@@ -8,7 +8,7 @@ package onlineshoppinggui;
  *
  * @author johnn
  */
-public abstract class Products {
+public class Products {
 
     private String id;
     private String name;
