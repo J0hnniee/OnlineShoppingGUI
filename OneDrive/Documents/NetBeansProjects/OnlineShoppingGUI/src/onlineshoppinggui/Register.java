@@ -283,7 +283,7 @@ public class Register extends javax.swing.JFrame {
             }
         });
         jPanel1.add(signUpButton);
-        signUpButton.setBounds(350, 490, 67, 22);
+        signUpButton.setBounds(340, 490, 90, 22);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

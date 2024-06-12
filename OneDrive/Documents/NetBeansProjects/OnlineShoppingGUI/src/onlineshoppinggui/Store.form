@@ -110,8 +110,8 @@
                                       <Component id="jLabel1" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
                                       <Component id="jLabel2" min="-2" pref="107" max="-2" attributes="0"/>
                                       <Component id="jLabel3" min="-2" pref="107" max="-2" attributes="0"/>
-                                      <Component id="purchaseButton" min="-2" pref="84" max="-2" attributes="0"/>
                                       <Component id="totalLabel" alignment="0" min="-2" pref="116" max="-2" attributes="0"/>
+                                      <Component id="purchaseButton" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace pref="28" max="32767" attributes="0"/>
                                   <Group type="103" groupAlignment="0" max="-2" attributes="0">

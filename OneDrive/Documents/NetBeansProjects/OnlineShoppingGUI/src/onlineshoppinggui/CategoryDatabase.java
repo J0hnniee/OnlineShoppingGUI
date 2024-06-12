@@ -40,6 +40,7 @@ public class CategoryDatabase {
         return row + 1;
     }
 
+    // checks if the category id exists
     public boolean CategoryIDExist(int id) {
         try {
             ps = connection.prepareStatement("select * from category where categoryid = ?");
@@ -54,6 +55,7 @@ public class CategoryDatabase {
         return false;
     }
 
+    // checks if the category name exists
     public boolean isCategoryNameExist(String categoryName) {
         try {
             ps = connection.prepareStatement("select * from category where categoryname = ?");
@@ -67,7 +69,8 @@ public class CategoryDatabase {
         }
         return false;
     }
-
+    
+    // method to insert a category
     public void insertCategory(int id, String cname, String desc) {
         String sql = "insert into category values(?,?,?)";
         try {
@@ -84,6 +87,7 @@ public class CategoryDatabase {
 
     }
 
+    // gets the category value
     public void getCategoryValues(JTable table, String search) {
         String categorySQL = "select * from category where categoryname like ? order by categoryid asc";
         try {
@@ -103,7 +107,7 @@ public class CategoryDatabase {
             Logger.getLogger(UserDatabase.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    // updates the categories
     public void updateCategories(int id, String categoryName, String description) {
         String sql = "update category set categoryname = ?, categorydesc = ? where categoryid = ?";
         try {
@@ -120,6 +124,7 @@ public class CategoryDatabase {
         }
     }
 
+    // deletes category
     public void deleteCategory(int id) {
         int i = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this?", "Delete Category", JOptionPane.YES_NO_OPTION);
         if (i == JOptionPane.OK_OPTION) {
